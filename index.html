@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css"> 
+img 
+{ 
+position:absolute; 
+left:0px; 
+top:0px; 
+z-index:-1; 
+} 
+</style> 
+<title>Shawn's Arduino Data Viewing Web Page </title>
+</head>
+<center> Foot Force Sensor Display </center>
+<body>
+</body>
+
+<div id="footHeatmap" style="width: 1000px; height: 1000px; position: absolute; top: 33px; left: 2px;"></div>
+
+<img src = "file:///C:/Users/scarrick/nodejs/images/foot.jpg" alt = "foot image"
+width = "500" height = "500" style = "position: absolute; top: 50px; left: 450px;"/>
+
+
+<script src="socketio.js"></script>
+<script src="heatmap.js"></script>
+<script>
+    var config = {
+        element: document.getElementById("footHeatmap"),
+        radius: 20,
+        opacity: 75,
+        visible: true,
+        gradient: {0: "blue", 1: "red"}
+    };
+    var heatmap = h337.create(config);
+
+    rad1 = 25;
+    rad2 = 15;
+  var socket = io.connect('http://localhost');
+  socket.on('update', function (data) {
+    console.log(data);
+
+    var pressureData = {
+        max: 1023,
+        data: [
+            { x: 635, y: 165, count: parseInt(data.val1) },
+            { x: 680, y: 155, count: parseInt(data.val2) },
+            { x: 715, y: 160, count: parseInt(data.val3) },
+            { x: 750, y: 170, count: parseInt(data.val4) },
+            { x: 780, y: 190, count: parseInt(data.val5) },
+            { x: 705, y: 420, count: parseInt(data.val6) },
+        ]
+    };
+
+    heatmap.store.setDataSet(pressureData);
+
+
+
+    // var c = document.getElementById("myCanvas");
+
+
+    // var rad = 15;
+
+    // // draw circle one
+    // data.val1
+    // var circ1 = c.getContext("2d");
+    // var grd = circ1.createRadialGradient(635, 165, 5, 635, 165, 30);
+    // grd.addColorStop(0,"red");
+    // grd.addColorStop(1,"white");
+
+    // circ1.beginPath();
+    // circ1.arc(635, 165, 25, 0, 2*Math.PI);
+    // circ1.fillStyle = grd;
+    // circ1.fill();
+    // circ1.stroke();
+    // /*circ1.fillStyle = "red";
+    // circ1.fill();
+    // */
+    // //circ1.fillStyle = grd;
+
+    // // draw circle two
+    // var circ2 = c.getContext("2d");
+    // var grd2 = circ2.createRadialGradient(680, 155, 1, 680, 155, 20);
+    // grd2.addColorStop(0, "red");
+    // grd2.addColorStop(1, "white");
+
+    // circ2.beginPath();
+    // circ2.arc(680, 155, rad, 0, 2*Math.PI);
+    // circ2.fillStyle = grd2;
+    // circ2.fill();
+    // circ2.stroke();
+
+    // // draw circle three
+    // var circ3 = c.getContext("2d");
+    // var grd3 = circ3.createRadialGradient(715, 160, 1, 715, 160, 20);
+    // grd3.addColorStop(0, "red");
+    // grd3.addColorStop(1, "white");
+
+    // circ3.beginPath();
+    // circ3.arc(715, 160, rad, 0, 2*Math.PI);
+    // circ3.fillStyle = grd3;
+    // circ3.fill();
+    // circ3.stroke();
+
+    // // draw circle four
+    // var circ4 = c.getContext("2d");
+    // var grd4 = circ4.createRadialGradient(750, 170, 1, 750, 170, 20);
+    // grd4.addColorStop(0, "red");
+    // grd4.addColorStop(1, "white");
+
+    // circ4.beginPath();
+    // circ4.arc(750, 170, rad, 0, 2*Math.PI);
+    // circ4.fillStyle = grd4;
+    // circ4.fill();
+    // circ4.stroke();
+
+    // // draw circle five
+    // var circ5 = c.getContext("2d");
+    // var grd5 = circ5.createRadialGradient(780, 190, 1, 780, 190, 20);
+    // grd5.addColorStop(0, "red");
+    // grd5.addColorStop(1, "white");
+
+    // circ5.beginPath();
+    // circ5.arc(780, 190, rad, 0, 2*Math.PI);
+    // circ5.fillStyle = grd5;
+    // circ5.fill();
+    // circ5.stroke();
+
+    // // draw blade
+    // var blade = c.getContext("2d");
+    // var bladeGrd = blade.createRadialGradient(760, 310, 1, 760, 310, 20);
+    // bladeGrd.addColorStop(0, "red");
+    // bladeGrd.addColorStop(1, "white");
+
+    // blade.beginPath();
+    // blade.arc(760, 310, rad, 0, 2*Math.PI);
+    // blade.fillStyle = bladeGrd;
+    // blade.fill();
+    // blade.stroke();
+
+    // // draw heel
+    // var heel = c.getContext("2d");
+    // var heelGrd = heel.createRadialGradient(705, 420, 10, 705, 420, 40);
+    // heelGrd.addColorStop(0, "red");
+    // heelGrd.addColorStop(1, "white");
+
+    // heel.beginPath();
+    // heel.arc(705, 420, 30, 0, 2*Math.PI);
+    // heel.fillStyle = heelGrd;
+    // heel.fill();
+    // heel.stroke();
+    // //alert(data);
+    // // socket.emit('my other event', { my: 'data' });
+  });
+  
+</script>
+</html>
